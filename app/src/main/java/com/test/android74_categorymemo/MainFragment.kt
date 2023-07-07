@@ -27,7 +27,10 @@ class MainFragment : Fragment() {
     lateinit var mainActivity: MainActivity
 
     // 카테고리의 정보를 담을 리스트
-    var categoryList = mutableListOf<CategoryClass>()
+    companion object{
+        var categoryList = mutableListOf<CategoryClass>()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +45,6 @@ class MainFragment : Fragment() {
             toolbarMain.run{
                 title = "카테고리 목록"
                 inflateMenu(R.menu.main_menu)
-                setOnMenuItemClickListener {
-                    mainActivity.replaceFragment(MainActivity.ADD_FRAGMENT, true, true)
-                    false
-                }
                 setOnMenuItemClickListener {
                     // 다이얼로그 생성을 위한 객체를 생성한다.
                     val builder = AlertDialog.Builder(mainActivity)
