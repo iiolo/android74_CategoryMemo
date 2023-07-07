@@ -110,6 +110,6 @@ class MainActivity : AppCompatActivity() {
 
 }
 // 정보를 담을 객체
-data class MemoClass(var idx :Int, var title:String, var content:String, var dateData:String)
+data class MemoClass(var idx :Int, var categoryIdx: Int, var title:String, var content:String, var dateData:String, )
 data class CategoryClass(var idx :Int, var categoryName:String)
 data class PwdClass(var idx :Int, var pwd:String)

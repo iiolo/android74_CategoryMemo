@@ -1,6 +1,7 @@
 package com.test.android74_categorymemo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +17,12 @@ class MemoFragment : Fragment() {
     lateinit var fragmentMemoBinding: FragmentMemoBinding
     lateinit var mainActivity: MainActivity
 
+
+
     // 메모의 정보를 담을 리스트
-    var memoList = mutableListOf<MemoClass>()
+    companion object {
+        var memoList = mutableListOf<MemoClass>()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,21 +33,33 @@ class MemoFragment : Fragment() {
         mainActivity = activity as MainActivity
 
 
-        fragmentMemoBinding.run{
-            toolbarMemo.run{
+        fragmentMemoBinding.run {
+            toolbarMemo.run {
                 title = MainFragment.categoryList[mainActivity.rowPosition].categoryName
                 inflateMenu(R.menu.main_menu)
+
+                // 뒤로가기 버튼 활성화
+                setNavigationIcon(R.drawable.baseline_arrow_back_24)
+                setNavigationOnClickListener {
+                    mainActivity.removeFragment(MainActivity.MEMO_FRAGMENT)
+                }
+
                 setOnMenuItemClickListener {
                     mainActivity.replaceFragment(MainActivity.ADD_FRAGMENT, true, true)
                     false
                 }
             }
 
-            recyclerViewMemo.run{
+            recyclerViewMemo.run {
                 adapter = MainRecyclerViewAdapter()
                 layoutManager = LinearLayoutManager(mainActivity)
 
-                addItemDecoration(DividerItemDecoration(mainActivity, DividerItemDecoration.VERTICAL))
+                addItemDecoration(
+                    DividerItemDecoration(
+                        mainActivity,
+                        DividerItemDecoration.VERTICAL
+                    )
+                )
             }
 
         }
@@ -52,9 +69,11 @@ class MemoFragment : Fragment() {
         return fragmentMemoBinding.root
     }
 
-    inner class MainRecyclerViewAdapter : RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolderClass>(){
+    inner class MainRecyclerViewAdapter :
+        RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolderClass>() {
 
-        inner class MainViewHolderClass(rowMainBinding: RowMemoBinding) : RecyclerView.ViewHolder(rowMainBinding.root){
+        inner class MainViewHolderClass(rowMainBinding: RowMemoBinding) :
+            RecyclerView.ViewHolder(rowMainBinding.root) {
             var textViewRowMemo: TextView
 
             init {
@@ -90,8 +109,9 @@ class MemoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        memoList = MemoDAO.selectAllData(mainActivity)
+            var cIdx = MainFragment.categoryList[mainActivity.rowPosition].idx
+        var tempList = MemoDAO.selectAllData(mainActivity)
+            memoList = tempList.filter { memoClass ->  memoClass.categoryIdx == cIdx}.toMutableList()
 
         // 리사이클러뷰 갱신
         fragmentMemoBinding.recyclerViewMemo.adapter?.notifyDataSetChanged()

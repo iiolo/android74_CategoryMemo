@@ -149,7 +149,13 @@ class MainFragment : Fragment() {
 
                     // 두 번째 메뉴(카테고리 삭제)에 대한 이벤트 처리
                     menu[1].setOnMenuItemClickListener {
+                        // 카테고리 삭제시 해당 카테고리에 속한 메모들도 삭제
+                        MemoDAO.deleteData(mainActivity, categoryList[adapterPosition].idx)
+
+                        // 카테고리 삭제
                         CategoryDAO.deleteData(mainActivity,categoryList[adapterPosition].idx)
+
+                        // 리사이클러뷰 갱신
                         categoryList = CategoryDAO.selectAllData(mainActivity)
                         fragmentMainBinding.recyclerViewMain.adapter?.notifyDataSetChanged()
                         false
