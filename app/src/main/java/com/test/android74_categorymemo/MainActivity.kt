@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
-
         replaceFragment(MAIN_FRAGMENT, false, false)
     }
 
