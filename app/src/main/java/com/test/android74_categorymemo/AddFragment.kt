@@ -1,5 +1,6 @@
 package com.test.android74_categorymemo
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ class AddFragment : Fragment() {
 
             toolbarAdd.run{
                 title = "메모 추가"
+                setTitleTextColor(Color.WHITE)
                 inflateMenu(R.menu.add_menu)
 
                 // 뒤로가기 버튼 활성화

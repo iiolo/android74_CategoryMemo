@@ -1,6 +1,7 @@
 package com.test.android74_categorymemo
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -27,6 +28,7 @@ class PwdFragment : Fragment() {
         fragmentPwdBinding.run {
             toolbarPwd.run {
                 title = "비밀번호 설정"
+                setTitleTextColor(Color.WHITE)
             }
             buttonPwd.setOnClickListener {
                 Log.i("pwd", "${editTextPwd.text}" )

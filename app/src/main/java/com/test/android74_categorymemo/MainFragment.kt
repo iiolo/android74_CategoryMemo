@@ -1,6 +1,7 @@
 package com.test.android74_categorymemo
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
@@ -44,6 +45,7 @@ class MainFragment : Fragment() {
         fragmentMainBinding.run{
             toolbarMain.run{
                 title = "카테고리 목록"
+                setTitleTextColor(Color.WHITE)
                 inflateMenu(R.menu.main_menu)
                 setOnMenuItemClickListener {
                     // 다이얼로그 생성을 위한 객체를 생성한다.

@@ -1,5 +1,6 @@
 package com.test.android74_categorymemo
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ class LoginFragment : Fragment() {
         fragmentLoginBinding.run {
             toolbarLogin.run {
                 title = "로그인"
+                setTitleTextColor(Color.WHITE)
             }
 
             buttonLogin.setOnClickListener {

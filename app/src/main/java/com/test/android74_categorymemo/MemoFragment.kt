@@ -1,5 +1,6 @@
 package com.test.android74_categorymemo
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -36,6 +37,7 @@ class MemoFragment : Fragment() {
         fragmentMemoBinding.run {
             toolbarMemo.run {
                 title = MainFragment.categoryList[mainActivity.rowPosition].categoryName
+                setTitleTextColor(Color.WHITE)
                 inflateMenu(R.menu.main_menu)
 
                 // 뒤로가기 버튼 활성화

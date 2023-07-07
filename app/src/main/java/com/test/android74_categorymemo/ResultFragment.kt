@@ -1,6 +1,7 @@
 package com.test.android74_categorymemo
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -29,6 +30,7 @@ class ResultFragment : Fragment() {
         fragmentResultBinding.run{
             toolbarResult.run {
                 title = "메모 읽기"
+                setTitleTextColor(Color.WHITE)
                 inflateMenu(R.menu.result_menu)
 
                 // 뒤로가기 버튼 활성화

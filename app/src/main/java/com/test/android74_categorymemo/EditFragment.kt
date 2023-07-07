@@ -1,5 +1,6 @@
 package com.test.android74_categorymemo
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,7 @@ class EditFragment : Fragment() {
 
             toolbarEdit.run {
                 title = "메모 수정"
+                setTitleTextColor(Color.WHITE)
                 inflateMenu(R.menu.edit_menu)
 
                 // 뒤로가기 버튼 활성화
