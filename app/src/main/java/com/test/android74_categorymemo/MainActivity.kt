@@ -28,13 +28,25 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // 비밀번호
+    var pwd = mutableListOf<PwdClass>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
-        replaceFragment(MAIN_FRAGMENT, false, false)
+        pwd = PwdDAO.selectAllData(this)
+
+        // pwd 테이블에 데이터가 없을 경우 pwd 설정화면이 나오고 아니면 로그인 화면 나오게 하기
+        if(pwd.isEmpty()){
+            replaceFragment(PWD_FRAGMENT, false, false)
+        } else {
+            replaceFragment(LOGIN_FRAGMENT, false, false)
+        }
+
+
     }
 
     // 지정한 Fragment를 보여주는 메서드
