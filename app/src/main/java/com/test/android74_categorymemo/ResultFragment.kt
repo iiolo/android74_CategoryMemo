@@ -1,59 +1,87 @@
 package com.test.android74_categorymemo
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import com.test.android74_categorymemo.databinding.FragmentResultBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ResultFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ResultFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var fragmentResultBinding: FragmentResultBinding
+    lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ResultFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ResultFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        fragmentResultBinding = FragmentResultBinding.inflate(inflater)
+        mainActivity = activity as MainActivity
+
+
+        val memoList = MemoDAO.selectAllData(mainActivity)
+
+        // 선택한 행 번째의 객체에서 데이터를 가져와 출력한다.
+        fragmentResultBinding.run{
+            toolbarResult.run {
+                title = "메모 읽기"
+                inflateMenu(R.menu.result_menu)
+
+                // 뒤로가기 버튼 활성화
+                setNavigationIcon(R.drawable.baseline_arrow_back_24)
+                setNavigationOnClickListener {
+                    mainActivity.removeFragment(MainActivity.RESULT_FRAGMENT)
+                }
+
+                setOnMenuItemClickListener {
+                    when(it.itemId){
+                        R.id.menuResultEdit -> {
+                            mainActivity.replaceFragment(MainActivity.EDIT_FRAGMENT, true, true)
+                        }
+                        else -> {
+                            //삭제 버튼 누를 경우 다이얼로그가 뜨게하기
+
+                            // 다이얼로그 생성을 위한 객체를 생성한다.
+                            val builder = AlertDialog.Builder(mainActivity)
+
+                            // 타이틀
+                            builder.setTitle("메모 삭제")
+
+                            // 메시지
+                            builder.setMessage("메모를 삭제 하겠습니까?")
+
+
+
+                            // 버튼 배치
+                            builder.setPositiveButton("삭제"){ dialogInterface: DialogInterface, i: Int ->
+                                MemoDAO.deleteData(mainActivity, memoList[mainActivity.rowPosition].idx)
+                                mainActivity.removeFragment(MainActivity.RESULT_FRAGMENT)
+                            }
+
+                            builder.setNegativeButton("취소", null)
+
+
+                            // 다이얼로그를 띄운다.
+                            builder.show()
+
+
+
+                        }
+                    }
+
+                    false
                 }
             }
+
+            textViewMemoTitle.text = memoList[mainActivity.rowPosition].title
+            textViewMemoDate.text = memoList[mainActivity.rowPosition].dateData
+            textViewMemoContent.text = memoList[mainActivity.rowPosition].content
+        }
+
+        return fragmentResultBinding.root
     }
 }
