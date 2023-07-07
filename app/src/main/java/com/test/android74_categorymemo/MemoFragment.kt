@@ -23,13 +23,13 @@ class MemoFragment : Fragment() {
     // 메모의 정보를 담을 리스트
     companion object {
         var memoList = mutableListOf<MemoClass>()
+        var memoIndex = 0
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         fragmentMemoBinding = FragmentMemoBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
@@ -53,7 +53,7 @@ class MemoFragment : Fragment() {
             }
 
             recyclerViewMemo.run {
-                adapter = MainRecyclerViewAdapter()
+                adapter = MemoRecyclerViewAdapter()
                 layoutManager = LinearLayoutManager(mainActivity)
 
                 addItemDecoration(
@@ -71,26 +71,32 @@ class MemoFragment : Fragment() {
         return fragmentMemoBinding.root
     }
 
-    inner class MainRecyclerViewAdapter :
-        RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolderClass>() {
+    inner class MemoRecyclerViewAdapter :
+        RecyclerView.Adapter<MemoRecyclerViewAdapter.MemoViewHolderClass>() {
 
-        inner class MainViewHolderClass(rowMainBinding: RowMemoBinding) :
-            RecyclerView.ViewHolder(rowMainBinding.root) {
+        inner class MemoViewHolderClass(rowMemoBinding: RowMemoBinding) :
+            RecyclerView.ViewHolder(rowMemoBinding.root) {
             var textViewRowMemo: TextView
 
             init {
-                textViewRowMemo = rowMainBinding.textViewRowMemo
+                textViewRowMemo = rowMemoBinding.textViewRowMemo
 
-                rowMainBinding.root.setOnClickListener {
-                    mainActivity.rowPosition = adapterPosition
+                rowMemoBinding.root.setOnClickListener {
+                    if(memoList.isNotEmpty()){
+                        mainActivity.memoPosition = memoList[adapterPosition].idx
+                    }
+//                    memoIndex = memoList[adapterPosition].categoryIdx
+                    Log.i("로우",adapterPosition.toString())
+                    Log.i("로우", mainActivity.memoPosition.toString())
+
                     mainActivity.replaceFragment(MainActivity.RESULT_FRAGMENT, true, true)
                 }
             }
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolderClass {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoViewHolderClass {
             val rowMemoBinding = RowMemoBinding.inflate(layoutInflater)
-            val mainViewHolderClass = MainViewHolderClass(rowMemoBinding)
+            val mainViewHolderClass = MemoViewHolderClass(rowMemoBinding)
 
             rowMemoBinding.root.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -104,16 +110,16 @@ class MemoFragment : Fragment() {
             return memoList.size
         }
 
-        override fun onBindViewHolder(holder: MainViewHolderClass, position: Int) {
+        override fun onBindViewHolder(holder: MemoViewHolderClass, position: Int) {
             holder.textViewRowMemo.text = memoList[position].title
         }
     }
 
     override fun onResume() {
         super.onResume()
-            var cIdx = MainFragment.categoryList[mainActivity.rowPosition].idx
-        var tempList = MemoDAO.selectAllData(mainActivity)
-            memoList = tempList.filter { memoClass ->  memoClass.categoryIdx == cIdx}.toMutableList()
+        val cIdx = MainFragment.categoryList[mainActivity.rowPosition].idx
+        val tempList = MemoDAO.selectAllData(mainActivity)
+        memoList = tempList.filter { memoClass ->  memoClass.categoryIdx == cIdx}.toMutableList()
 
         // 리사이클러뷰 갱신
         fragmentMemoBinding.recyclerViewMemo.adapter?.notifyDataSetChanged()

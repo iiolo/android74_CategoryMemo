@@ -24,7 +24,7 @@ class ResultFragment : Fragment() {
         mainActivity = activity as MainActivity
 
 
-        val memoList = MemoDAO.selectAllData(mainActivity)
+
 
         // 선택한 행 번째의 객체에서 데이터를 가져와 출력한다.
         fragmentResultBinding.run{
@@ -36,6 +36,7 @@ class ResultFragment : Fragment() {
                 // 뒤로가기 버튼 활성화
                 setNavigationIcon(R.drawable.baseline_arrow_back_24)
                 setNavigationOnClickListener {
+//                    mainActivity.memoPosition= MemoFragment.memoIndex +1
                     mainActivity.removeFragment(MainActivity.RESULT_FRAGMENT)
                 }
 
@@ -60,7 +61,7 @@ class ResultFragment : Fragment() {
 
                             // 버튼 배치
                             builder.setPositiveButton("삭제"){ dialogInterface: DialogInterface, i: Int ->
-                                MemoDAO.deleteData(mainActivity, memoList[mainActivity.rowPosition].idx)
+                                MemoDAO.deleteData(mainActivity, MemoDAO.selectData(mainActivity,mainActivity.memoPosition).idx)
                                 mainActivity.removeFragment(MainActivity.RESULT_FRAGMENT)
                             }
 
@@ -79,9 +80,15 @@ class ResultFragment : Fragment() {
                 }
             }
 
-            textViewMemoTitle.text = memoList[mainActivity.rowPosition].title
-            textViewMemoDate.text = memoList[mainActivity.rowPosition].dateData
-            textViewMemoContent.text = memoList[mainActivity.rowPosition].content
+
+
+                textViewMemoTitle.text =  MemoDAO.selectData(mainActivity,mainActivity.memoPosition).title
+                textViewMemoDate.text =  MemoDAO.selectData(mainActivity,mainActivity.memoPosition).dateData
+                textViewMemoContent.text =  MemoDAO.selectData(mainActivity,mainActivity.memoPosition).content
+
+
+
+
         }
 
         return fragmentResultBinding.root

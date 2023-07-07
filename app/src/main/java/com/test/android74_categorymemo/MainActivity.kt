@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     // 사용자가 누른 항목 번호
     var rowPosition = 0
+    var memoPosition = 0
 
     companion object {
         // Activity가 관리할 프래그먼트들의 이름

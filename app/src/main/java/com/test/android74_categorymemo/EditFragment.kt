@@ -53,7 +53,6 @@ class EditFragment : Fragment() {
 
                     // 수정된 메모 업데이트
                     MemoDAO.updateData(mainActivity,memo)
-
                     mainActivity.removeFragment(MainActivity.EDIT_FRAGMENT)
 
                     false
