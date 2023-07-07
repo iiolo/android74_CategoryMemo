@@ -2,6 +2,7 @@ package com.test.android74_categorymemo
 
 import android.content.ContentValues
 import android.content.Context
+import android.util.Log
 
 class PwdDAO {
     companion object {
@@ -40,7 +41,7 @@ class PwdDAO {
 
 
             val pwdClass = PwdClass(idx,pwd)
-
+            Log.i("pwdClass",pwdClass.toString())
             dbHelper.close()
             return pwdClass
         }

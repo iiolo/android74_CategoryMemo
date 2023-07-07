@@ -27,12 +27,10 @@ class LoginFragment : Fragment() {
 
             buttonLogin.setOnClickListener {
                 // 등록된 비밀번호 가져오기
-                val pwd = PwdDAO.selectData(mainActivity,0).pwd
+                val pwd = PwdDAO.selectAllData(mainActivity)[0].pwd
 
-
+                // 등록된 비밀번호와 입력한 비밀번호 일치 하지 않을 경우 다이얼로그 띄우기
                 if(pwd != editTextLogin.text.toString()){
-                    // 등록된 비밀번호와 입력한 비밀번호 일치 하지 않을 경우 다이얼로그 띄우기
-
                     // 다이얼로그 생성을 위한 객체를 생성한다.
                     val builder = AlertDialog.Builder(mainActivity)
 

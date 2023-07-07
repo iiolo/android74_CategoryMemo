@@ -49,8 +49,29 @@ class PwdFragment : Fragment() {
                     // 다이얼로그를 띄운다.
                     builder.show()
                 } else {
-                    PwdDAO.insertData(mainActivity,editTextPwd.text.toString())
-                    mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true)
+                    if(PwdDAO.selectAllData(mainActivity).isNotEmpty()){
+                        // 비밀번호가 이미 있을 경우 dialog 띄우기
+
+                        // 다이얼로그 생성을 위한 객체를 생성한다.
+                        val builder = AlertDialog.Builder(mainActivity)
+
+                        // 타이틀
+                        builder.setTitle("비밀번호 설정")
+
+                        // 메시지
+                        builder.setMessage("비밀번호가 일치하지 않습니다.")
+
+                        // 버튼 배치
+                        builder.setPositiveButton("확인", null)
+
+                        // 다이얼로그를 띄운다.
+                        builder.show()
+                    } else {
+                        PwdDAO.insertData(mainActivity,editTextPwd.text.toString())
+                        mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true)
+                    }
+
+
                 }
             }
 
