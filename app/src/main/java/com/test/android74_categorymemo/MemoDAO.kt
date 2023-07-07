@@ -4,7 +4,7 @@ package com.test.android74_categorymemo
 import android.content.ContentValues
 import android.content.Context
 
-class DAO {
+class MemoDAO {
 
     companion object {
         // Create : 저장
