@@ -33,7 +33,7 @@ class LoginFragment : Fragment() {
 
                 // 등록된 비밀번호와 입력한 비밀번호 일치 하지 않을 경우 다이얼로그 띄우기
                 if(pwd != editTextLogin.text.toString()){
-                    // 다이얼로그 생성을 위한 객체를 생성한다.
+                    // 다이얼로그 생성을 위한 객체를 생성
                     val builder = AlertDialog.Builder(mainActivity)
 
                     // 타이틀

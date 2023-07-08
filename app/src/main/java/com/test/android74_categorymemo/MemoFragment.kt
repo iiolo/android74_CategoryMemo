@@ -85,9 +85,6 @@ class MemoFragment : Fragment() {
                     if(memoList.isNotEmpty()){
                         mainActivity.memoPosition = memoList[adapterPosition].idx
                     }
-//                    memoIndex = memoList[adapterPosition].categoryIdx
-                    Log.i("로우",adapterPosition.toString())
-                    Log.i("로우", mainActivity.memoPosition.toString())
 
                     mainActivity.replaceFragment(MainActivity.RESULT_FRAGMENT, true, true)
                 }

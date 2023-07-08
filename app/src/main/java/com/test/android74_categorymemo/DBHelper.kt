@@ -10,7 +10,7 @@ class DBHelper(context:Context) : SQLiteOpenHelper(context, "Memo.db", null, 1) 
 
     override fun onCreate(sqliteDatabase: SQLiteDatabase?) {
 
-        // 디비 내 비밀번호 테이블 생성(번호,카테고리 이름)
+        // 디비 내 비밀번호 테이블 생성(번호,비밀번호)
         val sql = """create table PwdTable
             (idx integer primary key autoincrement,
             pwd text not null)

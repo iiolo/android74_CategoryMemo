@@ -18,8 +18,6 @@ class MemoDAO {
             contentValues.put("dateData", data.dateData)
 
             val dbHelper = DBHelper(context)
-            // 데이터를 저장할 테이블의 이름, null값을 어떻게 처리할 것인가
-            // 저장할 데이터를 가지고 있는 객체
 
             dbHelper.writableDatabase.insert("MemoTable", null, contentValues)
             dbHelper.close()
@@ -53,39 +51,6 @@ class MemoDAO {
             dbHelper.close()
             return memoClass
         }
-
-        // Read Condition Category: category에 해당하는 메모들을 가져오게 한다
-//        fun selectDataWithCategory(context: Context, cIdx:Int):MutableList<MemoClass>{
-//            val dataList = mutableListOf<MemoClass>()
-//
-//            val dbHelper = DBHelper(context)
-//            val selection = "categoryIdx = ?"
-//            val args = arrayOf("$cIdx")
-//            val cursor = dbHelper.writableDatabase.query("MemoTable", null, selection, args, null, null, null)
-//
-//            cursor.moveToNext()
-//
-//            val idx1 = cursor.getColumnIndex("idx")
-//            val idx2 = cursor.getColumnIndex("categoryIdx")
-//            val idx3 = cursor.getColumnIndex("title")
-//            val idx4 = cursor.getColumnIndex("content")
-//            val idx5= cursor.getColumnIndex("dateData")
-//
-//            val idx = cursor.getInt(idx1)
-//            val categoryIdx = cursor.getInt(idx2)
-//            val title = cursor.getString(idx3)
-//            val content = cursor.getString(idx4)
-//            val dateData = cursor.getString(idx5)
-//
-//
-//            val memoClass = MemoClass(idx, categoryIdx, title,content,dateData)
-//
-//            dataList.add(memoClass)
-//
-//            dbHelper.close()
-//            return dataList
-//        }
-
 
         // Read All : 모든 행을 가져온다
         fun selectAllData(context: Context):MutableList<MemoClass>{

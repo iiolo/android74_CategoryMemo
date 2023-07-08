@@ -29,7 +29,7 @@ class EditFragment : Fragment() {
             editTextTitleEdit.setText(memoList[mainActivity.rowPosition].title)
             editTextContentEdit.setText(memoList[mainActivity.rowPosition].content)
 
-            // 수정을 위한 기존 메모 정보의 idx, 날짜 가져오기
+            // 수정을 위한 기존 메모 정보의 idx, 카테고리 idx, 날짜 가져오기
             val idx = memoList[mainActivity.rowPosition].idx
             val cIdx = memoList[mainActivity.rowPosition].categoryIdx
             val dateData = memoList[mainActivity.rowPosition].dateData
